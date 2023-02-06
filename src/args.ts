@@ -3,6 +3,7 @@ import commandLineUsage from "command-line-usage";
 
 const optionDefinitions = [
   { name: 'input', type: String, defaultOption: true, summary: "Specify what input file to start up" },
+  { name: 'offline', alias: 'f', type: Boolean, description: "Runs the runner in offline mode, panicking when the jar file is not found. Otherwise get release RMLStreamer-2.4.2-standalone.jar" },
   { name: 'help', alias: 'h', type: Boolean, description: "Display this help message" },
 ];
 
@@ -20,12 +21,13 @@ const sections = [
     content: [{ name: "input", summary: "Specify what input file to start up" }],
   },
   {
-    optionList: [optionDefinitions[1]]
+    optionList: [optionDefinitions[1], optionDefinitions[2]]
   }
 ];
 
 export type Args = {
   input: string,
+  offline: boolean,
 };
 
 function validArgs(args: any): boolean {

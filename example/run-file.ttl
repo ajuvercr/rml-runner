@@ -1,0 +1,19 @@
+@prefix : <https://w3id.org/conn#> .
+@prefix rml: <https://w3id.org/conn/rml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<> owl:imports <https://raw.githubusercontent.com/ajuvercr/rml-runner/master/ontology.ttl>.
+
+<inputStream> a :FileReaderChannel;
+  :filePath <./input.json>.
+
+<outputStream> a :FileWriterChannel;
+  :filePath <./output.ttl>.
+
+[] a rml:ExecRML;
+  rml:jarFile "./RMLStreamer-2.4.2-standalone2.jar";
+  rml:mappingFile <./mapping.ttl>;
+  rml:input <inputStream>;
+  rml:iterator "$.things[*]";
+  rml:output <outputStream>.
+

@@ -1,0 +1,24 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rmls: <http://semweb.mmlab.be/ns/rmls#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix activity: <http://example.com/activity/> .
+@base <http://example.com/base/> .
+
+<TriplesMap1>
+  a rr:TriplesMap;
+
+  rr:subjectMap [ rr:template "http://example.com/{x}/{y}" ];
+	
+  rr:predicateObjectMap [ 
+    rr:predicate ex:x ;
+    rr:objectMap [ rml:reference "x" ]
+  ],
+  [
+    rr:predicate ex:y ;
+    rr:objectMap [ rml:reference "y" ]
+  ] .

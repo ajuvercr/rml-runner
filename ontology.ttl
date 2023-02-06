@@ -1,0 +1,32 @@
+@prefix rml: <https://w3id.org/conn/rml#> .
+@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix fnom: <https://w3id.org/function/vocabulary/mapping#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <https://w3id.org/conn#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+rml:RMLProcess a :Process;
+  :supportsChannel :TcpChannel, :FileChannel.
+
+
+rml:ExecRML a rml:RMLProcess.
+
+[] a sh:NodeShape;
+  sh:targetClass rml:RMLProcess;
+  sh:property [
+    sh:datatype xsd:string;
+    sh:path rml:jarFile;
+    sh:name "RML Streamer location";
+  ], [
+    sh:datatype xsd:string;
+    sh:path rml:mappingFile;
+    sh:name "Mapping file";
+  ], [
+    sh:class :WriterChannel;
+    sh:path rml:input;
+    sh:name "Input channel";
+  ], [
+    sh:class :ReaderChannel;
+    sh:path rml:output;
+    sh:name "Output channel";
+  ].
