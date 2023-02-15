@@ -70,7 +70,6 @@ export async function rml_mapper_reader(reader: Stream<string>, writer: Writer<s
     });
     await new Promise(res => proc.on('exit', res));
 
-
     const content = await readFile(outputFile);
     await writer.push(content.toString());
   };

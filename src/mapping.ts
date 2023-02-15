@@ -62,23 +62,22 @@ export function handleLogicalSource(store: Store, config: { "type": string; conf
   }
   const mapping = mappings[0];
 
-  const logicalSources = store.getObjects(mapping, RML.logicalSource, null);
-  if (logicalSources.length > 1) {
-    throw `Expected at most, one logicalSource, found ${logicalSources.length}`;
-  }
+  // Delete lingering logicalSources
+  store.getObjects(mapping, RML.logicalSource, null).forEach(s => recursiveDelete(s, store));
 
-  if (logicalSources.length < 1) {
-    const id = store.createBlankNode();
-    logicalSources.push(id);
-    store.addQuads([
-      Factory.quad(
-        mapping, RML.terms.logicalSource, id
-      ),
-    ]);
-  }
+  // Delete lingering logicalTargets
+  store.getQuads(null, RML.custom("logicalTarget"), null, null).forEach(q => {
+    store.delete(q);
+    recursiveDelete(q.object, store)
+  });
 
-  const logicalSource = logicalSources[0];
-  store.getObjects(logicalSource, RML.source, null).forEach(s => recursiveDelete(s, store));
+  const id = store.createBlankNode();
+  const logicalSource = id;
+  store.addQuads([
+    Factory.quad(
+      mapping, RML.terms.logicalSource, id
+    ),
+  ]);
 
   switch (config.type) {
     case "file":
